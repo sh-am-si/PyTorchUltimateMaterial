@@ -1,11 +1,7 @@
-#%% packages
-import torch
+# %% packages
 import torch.nn as nn
-from torch.utils.data import Dataset, DataLoader
 from sklearn.datasets import load_iris
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-import seaborn as sns
+
 # %% data import
 iris = load_iris()
 X = iris.data
@@ -17,7 +13,6 @@ y = iris.target
 # %% convert to float32
 
 # %% dataset
-
 
 
 # %% dataloader
@@ -37,7 +32,7 @@ criterion = nn.CrossEntropyLoss()
 # %% optimizer
 
 # %% training
-     
+
 # %% show losses over epochs
 
 
@@ -45,4 +40,3 @@ criterion = nn.CrossEntropyLoss()
 
 
 # %% Accuracy
-

@@ -1,23 +1,24 @@
-#%% packages
-from typing import OrderedDict
+# %% packages
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 from torchvision.datasets import ImageFolder
 import numpy as np
 import matplotlib.pyplot as plt
-import torchvision.utils 
+import torchvision.utils
 
-#%% Dataset and data loader
-path_images = 'data/train'
+# %% Dataset and data loader
+path_images = "data/train"
 
 transform = transforms.Compose(
-    [transforms.Resize((64,64)),
-    transforms.Grayscale(num_output_channels=1),
-    transforms.ToTensor(),
-    transforms.Normalize((0.5, ), (0.5, ))])
+    [
+        transforms.Resize((64, 64)),
+        transforms.Grayscale(num_output_channels=1),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5,), (0.5,)),
+    ]
+)
 
 dataset = ImageFolder(root=path_images, transform=transform)
 dataloader = DataLoader(dataset, batch_size=8, shuffle=True)
@@ -37,7 +38,7 @@ LATENT_DIMS = 128
 # model(input).shape
 
 
-#%% init model, loss function, optimizer
+# %% init model, loss function, optimizer
 model = Autoencoder()
 
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
@@ -55,28 +56,30 @@ for epoch in range(NUM_EPOCHS):
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
-    
-    print(f"Epoch: {epoch} \tLoss: {np.mean(losses_epoch)}")  
+
+    print(f"Epoch: {epoch} \tLoss: {np.mean(losses_epoch)}")
+
 
 # %% visualise original and reconstructed images
 def show_image(img):
     img = 0.5 * (img + 1)  # denormalizeA
-    # img = img.clamp(0, 1) 
+    # img = img.clamp(0, 1)
     npimg = img.numpy()
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
 
+
 images, labels = iter(dataloader).next()
-print('original')
-plt.rcParams["figure.figsize"] = (20,3)
+print("original")
+plt.rcParams["figure.figsize"] = (20, 3)
 show_image(torchvision.utils.make_grid(images))
 
 # %% latent space
-print('latent space')
+print("latent space")
 latent_img = model.encoder(images)
 latent_img = latent_img.view(-1, 1, 8, 16)
 show_image(torchvision.utils.make_grid(latent_img))
-#%%
-print('reconstructed')
+# %%
+print("reconstructed")
 show_image(torchvision.utils.make_grid(model(images)))
 
 

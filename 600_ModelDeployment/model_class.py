@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 
+
 class MultiClassNet(nn.Module):
     def __init__(self, NUM_FEATURES, NUM_CLASSES, HIDDEN_FEATURES):
         super().__init__()

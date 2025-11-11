@@ -1,5 +1,4 @@
-#%% packages
-import numpy as np
+# %% packages
 # %%
 X = [0, 1]
 w1 = [2, 3]
